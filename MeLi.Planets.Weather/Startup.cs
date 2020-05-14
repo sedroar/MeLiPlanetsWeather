@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MeLi.Planets.Weather.DataAccess;
+using MeLi.Planets.Weather.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
 namespace MeLi.Planets.Weather
 {
@@ -25,6 +28,9 @@ namespace MeLi.Planets.Weather
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(typeof(IMongoClient), new MongoClient(Configuration.GetConnectionString("MongoDb")));
+            services.AddTransient<Repository<DataAccess.DayWeatherForecast>>();
+            services.AddTransient<PlanetsWeatherForecastService>();
             services.AddControllers();
         }
 

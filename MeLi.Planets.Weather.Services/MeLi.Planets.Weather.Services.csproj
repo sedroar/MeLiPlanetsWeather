@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MeLi.Plantes.Weather.DataAccess\MeLi.Planets.Weather.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

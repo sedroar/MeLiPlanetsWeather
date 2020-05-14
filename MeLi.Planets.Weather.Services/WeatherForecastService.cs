@@ -2,9 +2,9 @@
 
 namespace MeLi.Planets.Weather.Services
 {
-    public class WeatherForecastService
+    public static class WeatherForecastService
     {
-        public Weather DetermineDayWether(Point planetOne, Point planetTwo, Point planetThree)
+        public static Weather DetermineDayWether(Point planetOne, Point planetTwo, Point planetThree)
         {
             // Determine if planets are in line
             var planetsInLine = GeometricsService.PointsAreInLine(planetOne, planetTwo, planetThree);

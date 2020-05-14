@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30021.99
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeLi.Planets.Weather", "MeLi.Planets.Weather\MeLi.Planets.Weather.csproj", "{CAC20BA7-F930-4B26-A62D-A4A2490DBAF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeLi.Planets.Weather", "MeLi.Planets.Weather\MeLi.Planets.Weather.csproj", "{CAC20BA7-F930-4B26-A62D-A4A2490DBAF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeLi.Planets.Weather.Services", "MeLi.Planets.Weather.Services\MeLi.Planets.Weather.Services.csproj", "{FDF80718-3A60-491F-94EE-F73B53E7B3D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeLi.Planets.Weather.Services", "MeLi.Planets.Weather.Services\MeLi.Planets.Weather.Services.csproj", "{FDF80718-3A60-491F-94EE-F73B53E7B3D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeLi.Plantes.Weather.DataAccess", "MeLi.Plantes.Weather.DataAccess\MeLi.Plantes.Weather.DataAccess.csproj", "{1CBF7FFC-575B-41CE-8F5C-1D4704BCF1DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeLi.Planets.Weather.DataAccess", "MeLi.Plantes.Weather.DataAccess\MeLi.Planets.Weather.DataAccess.csproj", "{1CBF7FFC-575B-41CE-8F5C-1D4704BCF1DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
