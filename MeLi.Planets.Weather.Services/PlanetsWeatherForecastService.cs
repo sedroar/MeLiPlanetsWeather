@@ -44,7 +44,7 @@ namespace MeLi.Planets.Weather.Services
                 {
                     Date = now.AddDays(i),
                     Day = i,
-                    Weather = (MeLi.Planets.Weather.DataAccess.Weather)WeatherForecastService.DetermineDayWether(ferengiPosition, betasoidePosition, vulcanoPosition)
+                    Weather = WeatherForecastService.DetermineDayWether(ferengiPosition, betasoidePosition, vulcanoPosition)
                 });
 
                 var trianglePerimeter = GeometricsService.CalculateTrianglePerimeter(ferengiPosition, betasoidePosition, vulcanoPosition);
@@ -67,7 +67,7 @@ namespace MeLi.Planets.Weather.Services
         public async Task<object> GetDayWeatherForecast(int day)
         {
             var dayWeatherForecast = (await repository.Find(dayWeatherForecast => dayWeatherForecast.Day == day)).SingleOrDefault();
-            return new { Dia = dayWeatherForecast.Day, Fecha = dayWeatherForecast.Date.ToShortDateString(), Clima = dayWeatherForecast.Weather.ToString(), PicoDeLluvia = dayWeatherForecast.IsMaxTrianglePerimeter } ;
+            return new { Dia = dayWeatherForecast.Day, Fecha = dayWeatherForecast.Date.ToShortDateString(), Clima =  ((Weather) dayWeatherForecast.Weather).ToString(), PicoDeLluvia = dayWeatherForecast.IsMaxTrianglePerimeter } ;
         }
     }
 }
