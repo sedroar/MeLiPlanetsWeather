@@ -16,6 +16,7 @@ namespace MeLi.Planets.Weather.DataAccess
 
     public enum Weather
     {
+        Good = 0,
         Optimal = 1,
         Drought = 2,
         Rain = 4

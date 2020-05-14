@@ -6,6 +6,8 @@ namespace MeLi.Planets.Weather.Services
     {
         public static DataAccess.Weather DetermineDayWether(Point planetOne, Point planetTwo, Point planetThree)
         {
+            var sun = new Point { X = 0, Y = 0 };
+
             // Determine if planets are in line
             var planetsInLine = GeometricsService.PointsAreInLine(planetOne, planetTwo, planetThree);
             
@@ -21,7 +23,10 @@ namespace MeLi.Planets.Weather.Services
                 return DataAccess.Weather.Optimal;
             }
 
-            return DataAccess.Weather.Rain;
+            if (GeometricsService.PointIsInsideTriangle(sun, planetOne, planetTwo, planetThree))
+                return DataAccess.Weather.Rain;
+
+            return DataAccess.Weather.Good;
         }
     }
 }

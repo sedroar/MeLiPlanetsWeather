@@ -8,7 +8,6 @@ namespace MeLi.Planets.Weather.Services
 {
     public static class GeometricsService
     {
-
         public static Point GetPointInCircleCoordinates(double circleRadius, double angle)
         {
             return new Point
@@ -56,7 +55,24 @@ namespace MeLi.Planets.Weather.Services
             return sideASize + sideBSize + sideCSize;
         }
 
-            public static PointsInLine PointsAreInLine(Point coordinatesPointOne, Point coordinatesPointTwo, Point coordinatesPointsThree)
+        public static bool PointIsInsideTriangle(Point point, Point coordinatesPointOne, Point coordinatesPointTwo, Point coordinatesPointsThree)
+        {
+            // This is determined using baricentric coordinates
+
+            var s = coordinatesPointOne.Y * coordinatesPointsThree.X - coordinatesPointOne.X * coordinatesPointsThree.Y + (coordinatesPointsThree.Y - coordinatesPointOne.Y) * point.X + (coordinatesPointOne.X - coordinatesPointsThree.X) * point.Y;
+            var t = coordinatesPointOne.X * coordinatesPointTwo.Y - coordinatesPointOne.Y * coordinatesPointTwo.X + (coordinatesPointOne.Y - coordinatesPointTwo.Y) * point.X + (coordinatesPointTwo.X - coordinatesPointOne.X) * point.Y;
+
+            if ((s < 0) != (t < 0))
+                return false;
+
+            var A = -coordinatesPointTwo.Y * coordinatesPointsThree.X + coordinatesPointOne.Y * (coordinatesPointsThree.X - coordinatesPointTwo.X) + coordinatesPointOne.X * (coordinatesPointTwo.Y - coordinatesPointsThree.Y) + coordinatesPointTwo.X * coordinatesPointsThree.Y;
+
+            return A < 0 ?
+                    (s <= 0 && s + t >= A) :
+                    (s >= 0 && s + t <= A);
+        }
+
+        public static PointsInLine PointsAreInLine(Point coordinatesPointOne, Point coordinatesPointTwo, Point coordinatesPointsThree)
         {
             bool pointsAreInLine = (coordinatesPointOne.X == coordinatesPointTwo.X && coordinatesPointTwo.X == coordinatesPointsThree.X)
                 || (coordinatesPointOne.Y == coordinatesPointTwo.Y && coordinatesPointTwo.Y == coordinatesPointsThree.Y);
