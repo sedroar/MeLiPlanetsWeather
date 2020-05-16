@@ -8,33 +8,15 @@ namespace MeLi.Planets.Weather.Services
 {
     public static class GeometricsService
     {
+        private static double degreesToRadians = (Math.PI / 180);
+
         public static Point GetPointInCircleCoordinates(double circleRadius, double angle)
         {
             return new Point
             {
-                X = circleRadius * Math.Cos(angle * (Math.PI / 180)),
-                Y = circleRadius * Math.Sin(angle * (Math.PI / 180))
+                X = circleRadius * Math.Cos(angle * degreesToRadians),
+                Y = circleRadius * Math.Sin(angle * degreesToRadians)
             };
-        }
-
-        public static bool PointsFormATriangle(Point coordinatesPointOne, Point coordinatesPointTwo, Point coordinatesPointsThree)
-        {
-            // Side A: coordinatesPointOne -> coordinatesPointTwo
-            // Side B: coordinatesPointOne -> coordinatesPointsThree
-            // Side C: coordinatesPointTwo -> coordinatesPointsThree
-            double sideASize = Math.Sqrt(Math.Pow(coordinatesPointTwo.X - coordinatesPointOne.X, 2) + Math.Pow(coordinatesPointTwo.Y - coordinatesPointOne.Y, 2));
-            double sideBSize = Math.Sqrt(Math.Pow(coordinatesPointsThree.X - coordinatesPointOne.X, 2) + Math.Pow(coordinatesPointsThree.Y - coordinatesPointOne.Y, 2));
-            double sideCSize = Math.Sqrt(Math.Pow(coordinatesPointsThree.X - coordinatesPointTwo.X, 2) + Math.Pow(coordinatesPointsThree.Y - coordinatesPointTwo.Y, 2));
-
-            // A + B < C
-            bool conditionOne = (sideASize + sideBSize) < sideCSize;
-            // A + C < B
-            bool conditionTwo = (sideASize + sideCSize) < sideBSize;
-            // B + C < A
-            bool conditionThree = (sideBSize + sideCSize) < sideASize;
-
-            // All three condtions must be true in order to the points be part of a triangle
-            return conditionOne && conditionTwo && conditionThree;
         }
 
         public static double CalculateTrianglePerimeter(Point coordinatesPointOne, Point coordinatesPointTwo, Point coordinatesPointsThree)
@@ -74,10 +56,27 @@ namespace MeLi.Planets.Weather.Services
 
         public static PointsInLine PointsAreInLine(Point coordinatesPointOne, Point coordinatesPointTwo, Point coordinatesPointsThree)
         {
-            bool pointsAreInLine = (coordinatesPointOne.X == coordinatesPointTwo.X && coordinatesPointTwo.X == coordinatesPointsThree.X)
-                || (coordinatesPointOne.Y == coordinatesPointTwo.Y && coordinatesPointTwo.Y == coordinatesPointsThree.Y);
+            bool pointsAreInLine = (coordinatesPointOne.X == coordinatesPointTwo.X && coordinatesPointTwo.X == coordinatesPointsThree.X);
+            bool lineCrossPointZero = pointsAreInLine && (coordinatesPointOne.X == 0);
+            pointsAreInLine |= (coordinatesPointOne.Y == coordinatesPointTwo.Y && coordinatesPointTwo.Y == coordinatesPointsThree.Y);
+            lineCrossPointZero |= (pointsAreInLine && (coordinatesPointOne.Y == 0));
 
-            bool lineCrossPointZero = pointsAreInLine && (coordinatesPointOne.X == 0 || coordinatesPointOne.Y == 0);
+            if (!pointsAreInLine)
+            {
+                var sloap1 = (coordinatesPointTwo.Y - coordinatesPointOne.Y) / (coordinatesPointTwo.X - coordinatesPointOne.X);
+                var sloap2 = (coordinatesPointsThree.Y - coordinatesPointOne.Y) / (coordinatesPointsThree.X - coordinatesPointOne.X);
+
+                pointsAreInLine = (sloap1 == sloap2);
+
+                if (pointsAreInLine)
+                {
+                    var sloap0 = (coordinatesPointOne.Y - 0) / (coordinatesPointOne.X - 0);
+                    sloap1 = (coordinatesPointTwo.Y - 0) / (coordinatesPointTwo.X - 0);
+                    sloap2 = (coordinatesPointsThree.Y - 0) / (coordinatesPointsThree.X - 0);
+
+                    lineCrossPointZero = (sloap0 == sloap1 && sloap1 == sloap2);
+                }                
+            }
 
             return new PointsInLine
             {

@@ -22,11 +22,11 @@ namespace MeLi.Planets.Weather.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post()
+        public async Task<ActionResult> Post([FromQuery] int years)
         {
             try
             {
-                var loadResult = await planetsWeatherForecastService.LoadWeatherForecastPrevisions(10);
+                var loadResult = await planetsWeatherForecastService.LoadWeatherForecastPrevisions(years);
                 return Ok(loadResult);
             }
             catch (Exception ex)

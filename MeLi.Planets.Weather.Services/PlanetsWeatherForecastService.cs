@@ -9,11 +9,13 @@ namespace MeLi.Planets.Weather.Services
 {
     public class PlanetsWeatherForecastService
     {
-        private readonly Repository<DayWeatherForecast> repository;
+        private readonly Repository<DayWeatherForecast> dayWeatherForecastRepository;
+        private readonly Repository<DayPlanetsPositions> dayPlanetsPositionsRepository;
 
-        public PlanetsWeatherForecastService(Repository<DayWeatherForecast> repository)
+        public PlanetsWeatherForecastService(Repository<DayWeatherForecast> dayWeatherForecastRepository, Repository<DayPlanetsPositions> dayPlanetsPositionsRepository)
         {
-            this.repository = repository;
+            this.dayWeatherForecastRepository = dayWeatherForecastRepository;
+            this.dayPlanetsPositionsRepository = dayPlanetsPositionsRepository;
         }
 
         public async Task<bool> LoadWeatherForecastPrevisions(int years)
@@ -27,7 +29,10 @@ namespace MeLi.Planets.Weather.Services
             int dayOfMaximumTrianglePerimeter = 0;
             double maximumTrianglePerimeter = 0;
 
+            Point sun = new Point { X = 0, Y = 0 };
+
             List<DayWeatherForecast> planetDayWeatherForecasts = new List<DayWeatherForecast>();
+            List<DayPlanetsPositions> planetDayPositions = new List<DayPlanetsPositions>();
 
             for (int i = 1; i <= totalDays; i++)
             {
@@ -40,11 +45,28 @@ namespace MeLi.Planets.Weather.Services
                 double vulcanoAngle = -5 * i;
                 var vulcanoPosition = GeometricsService.GetPointInCircleCoordinates(1000, vulcanoAngle);
 
+                var date = now.AddDays(i);
+
+                var isLine = GeometricsService.PointsAreInLine(ferengiPosition, betasoidePosition, vulcanoPosition);
+                var sunIsInsideTriangle = GeometricsService.PointIsInsideTriangle(sun, ferengiPosition, betasoidePosition, vulcanoPosition);
+
+                planetDayPositions.Add(new DayPlanetsPositions
+                {
+                    Day = i,
+                    Date = date,
+                    Ferengi = new DataAccess.Point { X = ferengiPosition.X, Y = ferengiPosition.Y },
+                    Betasoide = new DataAccess.Point { X = betasoidePosition.X, Y = betasoidePosition.Y },
+                    Vulcano = new DataAccess.Point { X = vulcanoPosition.X, Y = vulcanoPosition.Y },
+                    IsLine = isLine.PointsAreInLine,
+                    SunIsInLine = isLine.LineCrossPointZero,
+                    SunIsInsideTriangle = sunIsInsideTriangle
+                });
+
                 planetDayWeatherForecasts.Add(new DayWeatherForecast
                 {
-                    Date = now.AddDays(i),
+                    Date = date,
                     Day = i,
-                    Weather = WeatherForecastService.DetermineDayWether(ferengiPosition, betasoidePosition, vulcanoPosition)
+                    Weather = WeatherForecastService.DetermineDayWether(sun, ferengiPosition, betasoidePosition, vulcanoPosition)
                 });
 
                 var trianglePerimeter = GeometricsService.CalculateTrianglePerimeter(ferengiPosition, betasoidePosition, vulcanoPosition);
@@ -59,14 +81,15 @@ namespace MeLi.Planets.Weather.Services
             var rainPeakDay = planetDayWeatherForecasts.Single(forecast => forecast.Day == dayOfMaximumTrianglePerimeter);
             rainPeakDay.IsMaxTrianglePerimeter = true;
 
-            await repository.InsertMany(planetDayWeatherForecasts);
+            await dayPlanetsPositionsRepository.InsertMany(planetDayPositions);
+            await dayWeatherForecastRepository.InsertMany(planetDayWeatherForecasts);
 
             return true;
         }
 
         public async Task<object> GetDayWeatherForecast(int day)
         {
-            var dayWeatherForecast = (await repository.Find(dayWeatherForecast => dayWeatherForecast.Day == day)).SingleOrDefault();
+            var dayWeatherForecast = (await dayWeatherForecastRepository.Find(dayWeatherForecast => dayWeatherForecast.Day == day)).SingleOrDefault();
             return new { Dia = dayWeatherForecast.Day, Fecha = dayWeatherForecast.Date.ToShortDateString(), Clima =  ((Weather) dayWeatherForecast.Weather).ToString(), PicoDeLluvia = dayWeatherForecast.IsMaxTrianglePerimeter } ;
         }
     }
