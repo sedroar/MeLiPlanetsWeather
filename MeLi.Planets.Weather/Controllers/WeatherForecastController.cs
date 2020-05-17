@@ -54,5 +54,25 @@ namespace MeLi.Planets.Weather.Controllers
                 return BadRequest("Error al obtener la previsión del clima para el día.");
             }
         }
+
+        [HttpGet]
+        [Route("periodos")]
+        public async Task<ActionResult> Get([FromQuery] Services.Weather? weather)
+        {
+            try
+            {
+                if (!weather.HasValue)
+                {
+                    return BadRequest("No se ha enviado el clima");
+                }
+                var weatherPeriods = await planetsWeatherForecastService.GetWeatherPeriods(weather.Value);
+                return Ok(weatherPeriods);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while retrieving weather periods");
+                return BadRequest("Error al obtener los períodos climáticos.");
+            }
+        }
     }
 }

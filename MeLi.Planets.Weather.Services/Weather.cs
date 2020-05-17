@@ -8,8 +8,10 @@ namespace MeLi.Planets.Weather.Services
 {
     public enum Weather
     {
+        [Description("Incorrecto")]
+        Incorrecto = 0,
         [Description("Óptimo")]
-        Óptimo = 1,
+        Optimo = 1,
         [Description("Sequía")]
         Sequía = 2,
         [Description("Lluvia")]

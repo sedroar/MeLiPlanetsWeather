@@ -67,7 +67,7 @@ namespace MeLi.Planets.Weather.Test
 
             weather = WeatherForecastService.DetermineDayWether(sun, new Point { X = -1000, Y = -2000 }, new Point { X = 1000, Y = 2000 }, new Point { X = 5000, Y = -500 });
 
-            Assert.AreEqual(DataAccess.Weather.Good, weather);
+            Assert.AreEqual(DataAccess.Weather.Incorrect, weather);
 
 
             // Planets are not in line. And the sun is in the triangle.

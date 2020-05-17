@@ -25,7 +25,7 @@ namespace MeLi.Planets.Weather.Services
             if (GeometricsService.PointIsInsideTriangle(sun, planetOne, planetTwo, planetThree))
                 return DataAccess.Weather.Rain;
 
-            return DataAccess.Weather.Good;
+            return DataAccess.Weather.Incorrect;
         }
     }
 }

@@ -29,8 +29,8 @@ namespace MeLi.Planets.Weather
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(typeof(IMongoClient), new MongoClient(Configuration.GetConnectionString("MongoDb")));
-            services.AddTransient<Repository<DataAccess.DayWeatherForecast>>();
+            services.AddSingleton(typeof(IMongoClient), new MongoClient(Configuration.GetConnectionString("MongoDb")));            
+            services.AddTransient<DayWeatherForecastRepository>();
             services.AddTransient<Repository<DayPlanetsPositions>>();
             services.AddTransient<PlanetsWeatherForecastService>();
             services.AddControllers();

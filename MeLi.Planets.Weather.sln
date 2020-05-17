@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeLi.Planets.Weather.Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeLi.Planets.Weather.DataAccess", "MeLi.Plantes.Weather.DataAccess\MeLi.Planets.Weather.DataAccess.csproj", "{1CBF7FFC-575B-41CE-8F5C-1D4704BCF1DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeLi.Planets.Weather.Test", "MeLi.Planets.Weather.Test\MeLi.Planets.Weather.Test.csproj", "{2148D063-1BBA-4A79-9733-7A414B9844DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeLi.Planets.Weather.Test", "MeLi.Planets.Weather.Test\MeLi.Planets.Weather.Test.csproj", "{2148D063-1BBA-4A79-9733-7A414B9844DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeLi.Planets.Weather.WorkerService", "MeLi.Planets.Weather.WorkerService\MeLi.Planets.Weather.WorkerService.csproj", "{1A7BC308-8427-405A-B2A1-48AE1F92D315}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2148D063-1BBA-4A79-9733-7A414B9844DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2148D063-1BBA-4A79-9733-7A414B9844DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2148D063-1BBA-4A79-9733-7A414B9844DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A7BC308-8427-405A-B2A1-48AE1F92D315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7BC308-8427-405A-B2A1-48AE1F92D315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7BC308-8427-405A-B2A1-48AE1F92D315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7BC308-8427-405A-B2A1-48AE1F92D315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
