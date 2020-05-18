@@ -21,21 +21,6 @@ namespace MeLi.Planets.Weather.Controllers
             this.planetsWeatherForecastService = planetsWeatherForecastService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Post([FromQuery] int years)
-        {
-            try
-            {
-                var loadResult = await planetsWeatherForecastService.LoadWeatherForecastPrevisions(years);
-                return Ok(loadResult);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error while loading days weather forecast");
-                return BadRequest("Error al cargar la previsión del clima.");
-            }
-        }
-
         [HttpGet]        
         public async Task<ActionResult> Get([FromQuery] int? dia)
         {
