@@ -1,5 +1,6 @@
 ﻿using MeLi.Planets.Weather.DataAccess;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,8 +31,8 @@ namespace MeLi.Planets.Weather.Services
 
             Point sun = new Point { X = 0, Y = 0 };
 
-            List<DayWeatherForecast> planetDayWeatherForecasts = new List<DayWeatherForecast>();
-            List<DayPlanetsPositions> planetDayPositions = new List<DayPlanetsPositions>();
+            ConcurrentBag<DayWeatherForecast> planetDayWeatherForecasts = new ConcurrentBag<DayWeatherForecast>();
+            ConcurrentBag<DayPlanetsPositions> planetDayPositions = new ConcurrentBag<DayPlanetsPositions>();
 
             List<Task> weatherForecastTasks = new List<Task>();
 
@@ -82,8 +83,8 @@ namespace MeLi.Planets.Weather.Services
             var rainPeakDay = planetDayWeatherForecasts.Single(forecast => forecast.Day == dayOfMaximumTrianglePerimeter);
             rainPeakDay.IsMaxTrianglePerimeter = true;
 
-            await dayPlanetsPositionsRepository.InsertMany(planetDayPositions);
-            await dayWeatherForecastRepository.InsertMany(planetDayWeatherForecasts);
+            await dayPlanetsPositionsRepository.InsertMany(planetDayPositions.OrderBy(p => p.Date));
+            await dayWeatherForecastRepository.InsertMany(planetDayWeatherForecasts.OrderBy(p => p.Date));
 
             return true;
         }

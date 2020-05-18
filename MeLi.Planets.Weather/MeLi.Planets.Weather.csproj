@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MeLi.Planets.Weather.Services\MeLi.Planets.Weather.Services.csproj" />
+    <ProjectReference Include="..\MeLi.Planets.Weather.WorkerService\MeLi.Planets.Weather.WorkerService.csproj" />
   </ItemGroup>
 
 

@@ -22,17 +22,14 @@ namespace MeLi.Planets.Weather.WorkerService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+            try
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                try
-                {
-                    var loadResult = await planetsWeatherForecastService.LoadWeatherForecastPrevisions(10);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error while loading days weather forecast");
-                }
+                var loadResult = await planetsWeatherForecastService.LoadWeatherForecastPrevisions(10);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while loading days weather forecast");
             }
         }
     }

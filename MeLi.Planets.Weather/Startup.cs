@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using Microsoft.OpenApi.Models;
+using MeLi.Planets.Weather.WorkerService;
 
 namespace MeLi.Planets.Weather
 {
@@ -33,6 +34,9 @@ namespace MeLi.Planets.Weather
             services.AddTransient<DayWeatherForecastRepository>();
             services.AddTransient<Repository<DayPlanetsPositions>>();
             services.AddTransient<PlanetsWeatherForecastService>();
+
+            services.AddHostedService<Worker>();
+
             services.AddControllers();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
