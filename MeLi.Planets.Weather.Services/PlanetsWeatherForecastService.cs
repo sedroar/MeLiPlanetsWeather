@@ -83,7 +83,8 @@ namespace MeLi.Planets.Weather.Services
             var rainPeakDay = planetDayWeatherForecasts.Single(forecast => forecast.Day == dayOfMaximumTrianglePerimeter);
             rainPeakDay.IsMaxTrianglePerimeter = true;
 
-            await dayPlanetsPositionsRepository.InsertMany(planetDayPositions.OrderBy(p => p.Date));
+            await dayWeatherForecastRepository.DeleteAllDocumentsFromCollection();
+
             await dayWeatherForecastRepository.InsertMany(planetDayWeatherForecasts.OrderBy(p => p.Date));
 
             return true;

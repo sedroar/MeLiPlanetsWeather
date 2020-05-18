@@ -14,9 +14,9 @@ namespace MeLi.Planets.Weather.DataAccess
     {
         private readonly IConfiguration configuration;
 
-        private readonly IMongoClient mongoClient;
+        private protected IMongoClient mongoClient;
         private IMongoDatabase database;
-        private IMongoCollection<T> collection;
+        protected IMongoCollection<T> collection;
 
         private UpdateOptions updateOptions => new UpdateOptions { IsUpsert = false };
 

@@ -9,7 +9,13 @@ namespace MeLi.Planets.Weather.DataAccess
     {
         public DayWeatherForecastRepository(IConfiguration configuration, IMongoClient mongoClient) : base(configuration, mongoClient)
         {
+            
+        }
 
+        public async Task DeleteAllDocumentsFromCollection()
+        {
+            var emptyFilter = Builders<DayWeatherForecast>.Filter.Empty;
+            await collection.DeleteManyAsync(emptyFilter);
         }
 
         public async Task<object> GetWeatherPeriods(Weather weather)
